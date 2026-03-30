@@ -167,7 +167,7 @@ export default function Monthly() {
                 <Tooltip
                   contentStyle={{ background: '#1f2937', border: '1px solid #374151', borderRadius: '8px' }}
                   labelStyle={{ color: '#fff' }}
-                  formatter={(value: number) => [`${value}%`, 'Completion']}
+                  formatter={(value) => [`${value}%`, 'Completion']}
                 />
                 <Bar dataKey="pct" radius={[0, 4, 4, 0]} />
               </BarChart>

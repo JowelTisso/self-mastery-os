@@ -104,26 +104,26 @@ export default function Yearly() {
   }, [allDays, logs])
 
   const getHeatColor = (score: number, hasData: boolean) => {
-    if (!hasData) return 'bg-gray-800/50'
+    if (!hasData) return 'bg-gray-100 dark:bg-gray-800/50'
     if (score >= 80) return 'bg-green-500'
-    if (score >= 60) return 'bg-green-600/70'
-    if (score >= 40) return 'bg-green-700/50'
-    if (score >= 20) return 'bg-green-800/40'
-    return 'bg-green-900/30'
+    if (score >= 60) return 'bg-green-400 dark:bg-green-600/70'
+    if (score >= 40) return 'bg-green-300 dark:bg-green-700/50'
+    if (score >= 20) return 'bg-green-200 dark:bg-green-800/40'
+    return 'bg-green-100 dark:bg-green-900/30'
   }
 
   return (
     <div className="pb-6 space-y-6">
       {/* Year Nav */}
       <div className="flex items-center justify-between">
-        <button onClick={() => setYear(year - 1)} className="p-2 rounded-lg hover:bg-gray-800 text-gray-400">
+        <button onClick={() => setYear(year - 1)} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
           <ChevronLeft className="w-5 h-5" />
         </button>
-        <h2 className="text-xl font-bold text-white">{year}</h2>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">{year}</h2>
         <button
           onClick={() => setYear(year + 1)}
           disabled={year >= new Date().getFullYear()}
-          className="p-2 rounded-lg hover:bg-gray-800 text-gray-400 disabled:opacity-30"
+          className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 disabled:opacity-30"
         >
           <ChevronRight className="w-5 h-5" />
         </button>
@@ -131,38 +131,38 @@ export default function Yearly() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-gray-900 rounded-xl p-4 border border-gray-800 flex items-center gap-3">
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-800 flex items-center gap-3">
           <Flame className="w-8 h-8 text-orange-500" />
           <div>
-            <p className="text-2xl font-bold text-white">{streaks.current}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{streaks.current}</p>
             <p className="text-xs text-gray-500">Current Streak</p>
           </div>
         </div>
-        <div className="bg-gray-900 rounded-xl p-4 border border-gray-800 flex items-center gap-3">
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-800 flex items-center gap-3">
           <Trophy className="w-8 h-8 text-amber-500" />
           <div>
-            <p className="text-2xl font-bold text-white">{streaks.longest}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{streaks.longest}</p>
             <p className="text-xs text-gray-500">Longest Streak</p>
           </div>
         </div>
-        <div className="bg-gray-900 rounded-xl p-4 border border-gray-800 flex items-center gap-3">
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-800 flex items-center gap-3">
           <Calendar className="w-8 h-8 text-blue-500" />
           <div>
-            <p className="text-2xl font-bold text-white">{yearLogs.length}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{yearLogs.length}</p>
             <p className="text-xs text-gray-500">Days Logged</p>
           </div>
         </div>
-        <div className="bg-gray-900 rounded-xl p-4 border border-gray-800 flex items-center gap-3">
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-800 flex items-center gap-3">
           <TrendingUp className="w-8 h-8 text-green-500" />
           <div>
-            <p className="text-2xl font-bold text-white">{Math.round(avgScore)}%</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{Math.round(avgScore)}%</p>
             <p className="text-xs text-gray-500">Avg Score</p>
           </div>
         </div>
-        <div className="bg-gray-900 rounded-xl p-4 border border-gray-800 flex items-center gap-3 col-span-2">
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-800 flex items-center gap-3 col-span-2">
           <Target className="w-8 h-8 text-purple-500" />
           <div>
-            <p className="text-2xl font-bold text-white">{bestMonth}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{bestMonth}</p>
             <p className="text-xs text-gray-500">Best Month</p>
           </div>
         </div>
@@ -170,8 +170,8 @@ export default function Yearly() {
 
       {/* Heatmap */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-400 mb-3">Contribution Heatmap</h3>
-        <div className="bg-gray-900 rounded-xl border border-gray-800 p-4 overflow-x-auto relative">
+        <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3">Contribution Heatmap</h3>
+        <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4 overflow-x-auto relative">
           <div className="flex gap-[3px] min-w-max">
             {heatmapWeeks.map((week, wi) => (
               <div key={wi} className="flex flex-col gap-[3px]">
@@ -200,7 +200,7 @@ export default function Yearly() {
             </div>
           )}
           {/* Month labels */}
-          <div className="flex mt-2 text-[10px] text-gray-600">
+          <div className="flex mt-2 text-[10px] text-gray-400 dark:text-gray-600">
             {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((m) => (
               <span key={m} className="flex-1">{m}</span>
             ))}
@@ -211,8 +211,8 @@ export default function Yearly() {
       {/* Radar Chart */}
       {radarData.length > 0 && (
         <div>
-          <h3 className="text-sm font-semibold text-gray-400 mb-3">Pillar Overview</h3>
-          <div className="bg-gray-900 rounded-xl border border-gray-800 p-4">
+          <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3">Pillar Overview</h3>
+          <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4">
             <ResponsiveContainer width="100%" height={300}>
               <RadarChart data={radarData}>
                 <PolarGrid stroke="#374151" />

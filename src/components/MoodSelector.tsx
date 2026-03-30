@@ -20,8 +20,8 @@ export default function MoodSelector({ value, onChange }: MoodSelectorProps) {
           onClick={() => onChange(mood.value)}
           className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all ${
             value === mood.value
-              ? 'bg-gray-700 scale-110'
-              : 'hover:bg-gray-800'
+              ? 'bg-gray-200 dark:bg-gray-700 scale-110'
+              : 'hover:bg-gray-100 dark:hover:bg-gray-800'
           }`}
         >
           <span className="text-2xl">{mood.emoji}</span>

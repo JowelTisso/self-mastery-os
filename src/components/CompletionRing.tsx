@@ -25,7 +25,7 @@ export default function CompletionRing({ percentage, size = 140 }: CompletionRin
           fill="none"
           stroke="currentColor"
           strokeWidth={strokeWidth}
-          className="text-gray-800"
+          className="text-gray-200 dark:text-gray-800"
         />
         <circle
           cx={size / 2}
@@ -41,7 +41,7 @@ export default function CompletionRing({ percentage, size = 140 }: CompletionRin
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-3xl font-bold text-white">{Math.round(percentage)}%</span>
+        <span className="text-3xl font-bold text-gray-900 dark:text-white">{Math.round(percentage)}%</span>
       </div>
     </div>
   )

@@ -27,18 +27,19 @@ export default function ScheduleBlockCard({ block, completed, onToggle }: Schedu
       onClick={handleToggle}
       className={`w-full flex items-center gap-3 p-4 rounded-xl border transition-all text-left ${
         completed
-          ? 'bg-gray-800/50 border-gray-800 opacity-60'
-          : 'bg-gray-900 border-gray-800 hover:border-gray-700'
+          ? 'bg-gray-100/50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-800 opacity-60'
+          : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700'
       } ${animating ? 'animate-check-pulse' : ''}`}
     >
       {/* Checkbox */}
       <div
         className="shrink-0 w-7 h-7 rounded-lg border-2 flex items-center justify-center transition-colors"
         style={{
-          borderColor: completed ? color : 'rgb(75 85 99)',
+          borderColor: completed ? color : undefined,
           backgroundColor: completed ? color : 'transparent',
         }}
       >
+        {!completed && <div className="w-full h-full rounded-[5px] border-gray-300 dark:border-gray-600" />}
         {completed && <Check className="w-4 h-4 text-white" strokeWidth={3} />}
       </div>
 
@@ -53,7 +54,7 @@ export default function ScheduleBlockCard({ block, completed, onToggle }: Schedu
             {label}
           </span>
         </div>
-        <p className={`text-sm font-medium ${completed ? 'line-through text-gray-500' : 'text-white'}`}>
+        <p className={`text-sm font-medium ${completed ? 'line-through text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-white'}`}>
           {block.title}
         </p>
         <p className="text-xs text-gray-500 mt-0.5 truncate">{block.description}</p>

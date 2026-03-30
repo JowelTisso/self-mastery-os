@@ -150,10 +150,10 @@ export default function Philosophy() {
       {/* Vision */}
       <div className="bg-gradient-to-br from-teal-500/10 to-blue-600/10 rounded-2xl border border-teal-500/20 p-6">
         <div className="flex items-center gap-2 mb-3">
-          <Sparkles className="w-5 h-5 text-teal-400" />
-          <h2 className="text-lg font-bold text-white">The Vision</h2>
+          <Sparkles className="w-5 h-5 text-teal-500 dark:text-teal-400" />
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white">The Vision</h2>
         </div>
-        <p className="text-gray-300 leading-relaxed">
+        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
           In 365 days, every single domain of your life will be measurably better — not because you were gifted,
           but because you showed up every day when others did not. This is your operating system.
         </p>
@@ -161,13 +161,13 @@ export default function Philosophy() {
 
       {/* The 8 Pillars */}
       <div>
-        <h2 className="text-xl font-bold text-white mb-4">The 8 Pillars</h2>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">The 8 Pillars</h2>
         <div className="space-y-3">
           {PILLARS.map((pillar) => {
             const isExpanded = expandedPillar === pillar.id
             const color = PILLAR_COLORS[pillar.id]
             return (
-              <div key={pillar.id} className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+              <div key={pillar.id} className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
                 <button
                   onClick={() => setExpandedPillar(isExpanded ? null : pillar.id)}
                   className="w-full flex items-center gap-3 p-4 text-left"
@@ -178,24 +178,24 @@ export default function Philosophy() {
                   >
                     {pillar.icon}
                   </div>
-                  <span className="flex-1 font-semibold text-white">{pillar.title}</span>
+                  <span className="flex-1 font-semibold text-gray-900 dark:text-white">{pillar.title}</span>
                   {isExpanded ? <ChevronUp className="w-5 h-5 text-gray-500" /> : <ChevronDown className="w-5 h-5 text-gray-500" />}
                 </button>
                 {isExpanded && (
                   <div className="px-4 pb-4 space-y-4">
                     <div>
                       <h4 className="text-xs font-semibold text-gray-500 uppercase mb-1">What it means</h4>
-                      <p className="text-sm text-gray-300">{pillar.what}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">{pillar.what}</p>
                     </div>
                     <div>
                       <h4 className="text-xs font-semibold text-gray-500 uppercase mb-1">Why it matters</h4>
-                      <p className="text-sm text-gray-300">{pillar.why}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">{pillar.why}</p>
                     </div>
                     <div>
                       <h4 className="text-xs font-semibold text-gray-500 uppercase mb-1">Study plan</h4>
                       <ul className="space-y-1">
                         {pillar.study.map((item, i) => (
-                          <li key={i} className="text-sm text-gray-400 flex items-start gap-2">
+                          <li key={i} className="text-sm text-gray-500 dark:text-gray-400 flex items-start gap-2">
                             <span className="text-teal-500 mt-1">•</span>
                             {item}
                           </li>
@@ -206,7 +206,7 @@ export default function Philosophy() {
                       <h4 className="text-xs font-semibold text-gray-500 uppercase mb-1">Weekly extras</h4>
                       <ul className="space-y-1">
                         {pillar.extras.map((item, i) => (
-                          <li key={i} className="text-sm text-gray-400 flex items-start gap-2">
+                          <li key={i} className="text-sm text-gray-500 dark:text-gray-400 flex items-start gap-2">
                             <span style={{ color }} className="mt-1">★</span>
                             {item}
                           </li>
@@ -222,26 +222,26 @@ export default function Philosophy() {
       </div>
 
       {/* Alternating Evening Rule */}
-      <div className="bg-gray-900 rounded-xl border border-gray-800 p-6">
+      <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6">
         <div className="flex items-center gap-2 mb-3">
-          <CalendarDays className="w-5 h-5 text-purple-400" />
-          <h3 className="text-lg font-bold text-white">The Alternating Evening Rule</h3>
+          <CalendarDays className="w-5 h-5 text-purple-500 dark:text-purple-400" />
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">The Alternating Evening Rule</h3>
         </div>
         <div className="space-y-2 text-sm">
-          <p className="text-gray-300"><span className="text-purple-400 font-medium">Mon / Wed / Fri:</span> Soft skills learning</p>
-          <p className="text-gray-300"><span className="text-purple-400 font-medium">Tue / Thu / Sat:</span> Culture & Assamese heritage</p>
-          <p className="text-gray-300"><span className="text-purple-400 font-medium">Sunday:</span> Rest or family outing</p>
+          <p className="text-gray-600 dark:text-gray-300"><span className="text-purple-500 dark:text-purple-400 font-medium">Mon / Wed / Fri:</span> Soft skills learning</p>
+          <p className="text-gray-600 dark:text-gray-300"><span className="text-purple-500 dark:text-purple-400 font-medium">Tue / Thu / Sat:</span> Culture & Assamese heritage</p>
+          <p className="text-gray-600 dark:text-gray-300"><span className="text-purple-500 dark:text-purple-400 font-medium">Sunday:</span> Rest or family outing</p>
         </div>
       </div>
 
       {/* What 1 Year Looks Like */}
       <div>
-        <h2 className="text-xl font-bold text-white mb-4">What 1 Year Looks Like</h2>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">What 1 Year Looks Like</h2>
         <div className="space-y-3">
           {YEAR_OUTCOMES.map((outcome) => (
-            <div key={outcome.title} className="bg-gray-900 rounded-xl border border-gray-800 p-4">
-              <h4 className="font-semibold text-white mb-1">{outcome.title}</h4>
-              <p className="text-sm text-gray-400">{outcome.result}</p>
+            <div key={outcome.title} className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4">
+              <h4 className="font-semibold text-gray-900 dark:text-white mb-1">{outcome.title}</h4>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{outcome.result}</p>
             </div>
           ))}
         </div>

@@ -63,15 +63,15 @@ export default function Dashboard() {
 
       {/* Header */}
       <div className="text-center space-y-2">
-        <h1 className="text-2xl font-bold text-white">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           {format(new Date(), 'EEEE, MMMM d, yyyy')}
         </h1>
-        <p className="text-gray-400 flex items-center justify-center gap-1.5">
+        <p className="text-gray-500 dark:text-gray-400 flex items-center justify-center gap-1.5">
           Day {dayNumber} of 365. Keep showing up.
           {streaks.current >= 7 && <Flame className="w-4 h-4 text-orange-500" />}
         </p>
         {streaks.current > 0 && (
-          <p className="text-sm text-teal-400">
+          <p className="text-sm text-teal-500 dark:text-teal-400">
             {streaks.current} day streak{streaks.current >= 7 ? ' 🔥' : ''}
           </p>
         )}
@@ -109,24 +109,24 @@ export default function Dashboard() {
 
       {/* Journal */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-white">Daily Journal</h3>
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Daily Journal</h3>
         <div>
-          <label className="block text-sm text-gray-400 mb-1">3 wins today...</label>
+          <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">3 wins today...</label>
           <textarea
             value={todayLog?.journal_wins ?? ''}
             onChange={(e) => setJournalWins(e.target.value)}
             rows={3}
-            className="w-full px-4 py-3 rounded-xl bg-gray-900 border border-gray-800 text-white placeholder-gray-600 resize-none focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 resize-none focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
             placeholder="What went well today?"
           />
         </div>
         <div>
-          <label className="block text-sm text-gray-400 mb-1">1 thing to improve...</label>
+          <label className="block text-sm text-gray-500 dark:text-gray-400 mb-1">1 thing to improve...</label>
           <textarea
             value={todayLog?.journal_improve ?? ''}
             onChange={(e) => setJournalImprove(e.target.value)}
             rows={2}
-            className="w-full px-4 py-3 rounded-xl bg-gray-900 border border-gray-800 text-white placeholder-gray-600 resize-none focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
+            className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 resize-none focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
             placeholder="What could be better tomorrow?"
           />
         </div>

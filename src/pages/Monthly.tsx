@@ -86,14 +86,14 @@ export default function Monthly() {
     <div className="pb-6 space-y-6">
       {/* Month Nav */}
       <div className="flex items-center justify-between">
-        <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="p-2 rounded-lg hover:bg-gray-800 text-gray-400">
+        <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
           <ChevronLeft className="w-5 h-5" />
         </button>
-        <h2 className="text-xl font-bold text-white">{format(currentMonth, 'MMMM yyyy')}</h2>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">{format(currentMonth, 'MMMM yyyy')}</h2>
         <button
           onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
           disabled={isSameMonth(currentMonth, new Date())}
-          className="p-2 rounded-lg hover:bg-gray-800 text-gray-400 disabled:opacity-30"
+          className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 disabled:opacity-30"
         >
           <ChevronRight className="w-5 h-5" />
         </button>
@@ -101,16 +101,16 @@ export default function Monthly() {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3">
-        <div className="bg-gray-900 rounded-xl p-3 text-center border border-gray-800">
-          <p className="text-2xl font-bold text-white">{Math.round(avgScore)}%</p>
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-3 text-center border border-gray-200 dark:border-gray-800">
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">{Math.round(avgScore)}%</p>
           <p className="text-xs text-gray-500">Avg Score</p>
         </div>
-        <div className="bg-gray-900 rounded-xl p-3 text-center border border-gray-800">
-          <p className="text-2xl font-bold text-white">{monthLogs.length}</p>
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-3 text-center border border-gray-200 dark:border-gray-800">
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">{monthLogs.length}</p>
           <p className="text-xs text-gray-500">Days Logged</p>
         </div>
-        <div className="bg-gray-900 rounded-xl p-3 text-center border border-gray-800">
-          <p className="text-2xl font-bold text-white">{bestStreak}</p>
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-3 text-center border border-gray-200 dark:border-gray-800">
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">{bestStreak}</p>
           <p className="text-xs text-gray-500">Best Streak</p>
         </div>
       </div>
@@ -119,7 +119,7 @@ export default function Monthly() {
       <div>
         <div className="grid grid-cols-7 gap-1 mb-1">
           {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((d) => (
-            <div key={d} className="text-center text-xs text-gray-600 py-1">{d}</div>
+            <div key={d} className="text-center text-xs text-gray-400 dark:text-gray-600 py-1">{d}</div>
           ))}
         </div>
         <div className="grid grid-cols-7 gap-1">
@@ -141,9 +141,9 @@ export default function Monthly() {
                 disabled={!hasData}
                 className={`aspect-square rounded-lg flex flex-col items-center justify-center text-xs transition-all ${
                   today ? 'ring-2 ring-teal-500' : ''
-                } ${hasData ? 'cursor-pointer hover:bg-gray-800' : ''}`}
+                } ${hasData ? 'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800' : ''}`}
               >
-                <span className={`text-[11px] ${today ? 'text-teal-400 font-bold' : future ? 'text-gray-700' : 'text-gray-400'}`}>
+                <span className={`text-[11px] ${today ? 'text-teal-500 dark:text-teal-400 font-bold' : future ? 'text-gray-300 dark:text-gray-700' : 'text-gray-600 dark:text-gray-400'}`}>
                   {format(day, 'd')}
                 </span>
                 {hasData && (
@@ -158,8 +158,8 @@ export default function Monthly() {
       {/* Pillar Breakdown Chart */}
       {pillarData.length > 0 && (
         <div>
-          <h3 className="text-sm font-semibold text-gray-400 mb-3">Pillar Breakdown</h3>
-          <div className="bg-gray-900 rounded-xl border border-gray-800 p-4">
+          <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3">Pillar Breakdown</h3>
+          <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4">
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={pillarData} layout="vertical">
                 <XAxis type="number" domain={[0, 100]} tick={{ fill: '#6b7280', fontSize: 11 }} />
@@ -179,20 +179,20 @@ export default function Monthly() {
       {/* Day Detail Modal */}
       {selectedDay && (
         <div className="fixed inset-0 bg-black/60 z-40 flex items-center justify-center p-4" onClick={() => setSelectedDay(null)}>
-          <div className="bg-gray-900 rounded-2xl border border-gray-800 p-6 w-full max-w-sm max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 w-full max-w-sm max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-white">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
                 {format(new Date(selectedDay.log_date + 'T00:00:00'), 'EEEE, MMM d')}
               </h3>
-              <button onClick={() => setSelectedDay(null)} className="p-1 rounded-lg hover:bg-gray-800 text-gray-400">
+              <button onClick={() => setSelectedDay(null)} className="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-2xl font-bold text-teal-400 mb-4">{Math.round(selectedDay.overall_score)}% completed</p>
+            <p className="text-2xl font-bold text-teal-500 dark:text-teal-400 mb-4">{Math.round(selectedDay.overall_score)}% completed</p>
             <div className="space-y-2">
               {SCHEDULE.map((block) => (
                 <div key={block.id} className={`flex items-center gap-2 text-sm ${
-                  selectedDay.completed_blocks.includes(block.id) ? 'text-green-400' : 'text-gray-600'
+                  selectedDay.completed_blocks.includes(block.id) ? 'text-green-500 dark:text-green-400' : 'text-gray-400 dark:text-gray-600'
                 }`}>
                   <span>{selectedDay.completed_blocks.includes(block.id) ? '✓' : '○'}</span>
                   <span>{block.title}</span>
@@ -200,15 +200,15 @@ export default function Monthly() {
               ))}
             </div>
             {selectedDay.journal_wins && (
-              <div className="mt-4 p-3 rounded-lg bg-gray-800">
+              <div className="mt-4 p-3 rounded-lg bg-gray-50 dark:bg-gray-800">
                 <p className="text-xs text-gray-500 mb-1">Wins</p>
-                <p className="text-sm text-gray-300">{selectedDay.journal_wins}</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">{selectedDay.journal_wins}</p>
               </div>
             )}
             {selectedDay.journal_improve && (
-              <div className="mt-2 p-3 rounded-lg bg-gray-800">
+              <div className="mt-2 p-3 rounded-lg bg-gray-50 dark:bg-gray-800">
                 <p className="text-xs text-gray-500 mb-1">Improve</p>
-                <p className="text-sm text-gray-300">{selectedDay.journal_improve}</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">{selectedDay.journal_improve}</p>
               </div>
             )}
           </div>

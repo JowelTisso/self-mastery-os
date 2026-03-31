@@ -2,9 +2,10 @@ import { useEffect, useState, useMemo } from 'react'
 import { format } from 'date-fns'
 import { Flame, Save } from 'lucide-react'
 import { useLogStore } from '../store/logStore'
-import { SCHEDULE } from '../data/schedule'
+import { useAuthStore } from '../store/authStore'
+import { useSchedule } from '../lib/useSchedule'
 import { TIME_GROUP_LABELS } from '../types'
-import type { TimeGroup } from '../types'
+import type { TimeGroup, ScheduleBlock } from '../types'
 import CompletionRing from '../components/CompletionRing'
 import MoodSelector from '../components/MoodSelector'
 import ScheduleBlockCard from '../components/ScheduleBlockCard'
@@ -16,6 +17,8 @@ export default function Dashboard() {
     toggleBlock, setMood, setJournalWins, setJournalImprove,
     saveLog, getStreaks, getDayNumber,
   } = useLogStore()
+  const { profile } = useAuthStore()
+  const schedule = useSchedule()
 
   const [showConfetti, setShowConfetti] = useState(false)
   const [prevCompleted, setPrevCompleted] = useState(0)
@@ -27,27 +30,27 @@ export default function Dashboard() {
   const completedBlocks = todayLog?.completed_blocks ?? []
   const percentage = todayLog?.overall_score ?? 0
   const streaks = getStreaks()
-  const dayNumber = getDayNumber()
+  const dayNumber = getDayNumber(profile?.journey_start_date)
 
   // Confetti when hitting 100%
   useEffect(() => {
-    if (completedBlocks.length === SCHEDULE.length && prevCompleted < SCHEDULE.length) {
+    if (completedBlocks.length === schedule.length && prevCompleted < schedule.length) {
       setShowConfetti(true)
       setTimeout(() => setShowConfetti(false), 100)
     }
     setPrevCompleted(completedBlocks.length)
-  }, [completedBlocks.length, prevCompleted])
+  }, [completedBlocks.length, prevCompleted, schedule.length])
 
   // Group schedule blocks
   const grouped = useMemo(() => {
-    const groups: Record<TimeGroup, typeof SCHEDULE> = {
+    const groups: Record<TimeGroup, ScheduleBlock[]> = {
       morning: [], deep_work: [], midday: [], afternoon: [], evening: [], night: [],
     }
-    for (const block of SCHEDULE) {
+    for (const block of schedule) {
       groups[block.group].push(block)
     }
     return groups
-  }, [])
+  }, [schedule])
 
   if (loading) {
     return (

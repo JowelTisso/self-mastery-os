@@ -6,7 +6,7 @@ import {
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts'
 import { useLogStore } from '../store/logStore'
-import { SCHEDULE } from '../data/schedule'
+import { useSchedule } from '../lib/useSchedule'
 import { PILLAR_LABELS, PILLAR_COLORS } from '../types'
 import type { DailyLog, Pillar } from '../types'
 
@@ -14,6 +14,7 @@ export default function Monthly() {
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState<DailyLog | null>(null)
   const { logs, fetchLogsForMonth } = useLogStore()
+  const schedule = useSchedule()
 
   const year = currentMonth.getFullYear()
   const month = currentMonth.getMonth() + 1
@@ -45,7 +46,7 @@ export default function Monthly() {
   const pillarData = useMemo(() => {
     const counts: Partial<Record<Pillar, { total: number; completed: number }>> = {}
     for (const log of monthLogs) {
-      for (const block of SCHEDULE) {
+      for (const block of schedule) {
         const pillar = block.category
         if (!counts[pillar]) counts[pillar] = { total: 0, completed: 0 }
         counts[pillar]!.total++
@@ -190,7 +191,7 @@ export default function Monthly() {
             </div>
             <p className="text-2xl font-bold text-teal-500 dark:text-teal-400 mb-4">{Math.round(selectedDay.overall_score)}% completed</p>
             <div className="space-y-2">
-              {SCHEDULE.map((block) => (
+              {schedule.map((block) => (
                 <div key={block.id} className={`flex items-center gap-2 text-sm ${
                   selectedDay.completed_blocks.includes(block.id) ? 'text-green-500 dark:text-green-400' : 'text-gray-400 dark:text-gray-600'
                 }`}>

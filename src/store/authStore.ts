@@ -16,6 +16,7 @@ interface AuthState {
   loginWithGoogle: () => Promise<void>
   logout: () => Promise<void>
   fetchProfile: () => Promise<void>
+  updateProfile: (updates: Partial<Pick<Profile, 'wake_time' | 'journey_start_date'>>) => Promise<void>
   clearError: () => void
 }
 
@@ -101,6 +102,18 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       .single()
     if (data) {
       set({ profile: data as Profile })
+    }
+  },
+
+  updateProfile: async (updates) => {
+    const { user, profile } = get()
+    if (!user) return
+    const { error } = await supabase
+      .from('profiles')
+      .update(updates)
+      .eq('id', user.id)
+    if (!error && profile) {
+      set({ profile: { ...profile, ...updates } })
     }
   },
 

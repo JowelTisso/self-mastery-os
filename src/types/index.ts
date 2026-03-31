@@ -33,6 +33,8 @@ export interface Profile {
   id: string
   name: string
   avatar_url: string | null
+  wake_time: string | null
+  journey_start_date: string | null
   created_at: string
 }
 

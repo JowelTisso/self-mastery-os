@@ -1,21 +1,32 @@
 import { useState, useEffect } from 'react'
-import { User, Moon, Sun, Download, Trash2, LogOut } from 'lucide-react'
+import { User, Moon, Sun, Download, Trash2, LogOut, Clock, CalendarDays } from 'lucide-react'
 import { useAuthStore } from '../store/authStore'
 import { useLogStore } from '../store/logStore'
 import { supabase } from '../lib/supabase'
 import { format } from 'date-fns'
+import { DEFAULT_WAKE_TIME } from '../lib/scheduleUtils'
 import type { DailyLog } from '../types'
 
 export default function Settings() {
-  const { profile, user, logout } = useAuthStore()
+  const { profile, user, logout, updateProfile } = useAuthStore()
   const { logs } = useLogStore()
   const [darkMode, setDarkMode] = useState(true)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [wakeTime, setWakeTime] = useState(profile?.wake_time ?? DEFAULT_WAKE_TIME)
+  const [journeyStartDate, setJourneyStartDate] = useState(profile?.journey_start_date ?? '')
+  const [savingSchedule, setSavingSchedule] = useState(false)
 
   useEffect(() => {
     const isDark = document.documentElement.classList.contains('dark')
     setDarkMode(isDark)
   }, [])
+
+  useEffect(() => {
+    if (profile) {
+      setWakeTime(profile.wake_time ?? DEFAULT_WAKE_TIME)
+      setJourneyStartDate(profile.journey_start_date ?? '')
+    }
+  }, [profile])
 
   const toggleTheme = () => {
     const next = !darkMode
@@ -54,6 +65,15 @@ export default function Settings() {
     URL.revokeObjectURL(url)
   }
 
+  const saveScheduleSettings = async () => {
+    setSavingSchedule(true)
+    await updateProfile({
+      wake_time: wakeTime,
+      journey_start_date: journeyStartDate || null,
+    })
+    setSavingSchedule(false)
+  }
+
   const deleteAccount = async () => {
     if (!user) return
     await supabase.from('daily_logs').delete().eq('user_id', user.id)
@@ -81,6 +101,46 @@ export default function Settings() {
             <p className="text-gray-900 dark:text-white font-semibold">{profile?.name ?? 'User'}</p>
             <p className="text-sm text-gray-500">{user?.email}</p>
           </div>
+        </div>
+      </div>
+
+      {/* Schedule */}
+      <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5">
+        <h3 className="text-sm font-semibold text-gray-500 uppercase mb-4">Schedule</h3>
+        <div className="space-y-4">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <Clock className="w-5 h-5 text-teal-500" />
+              <label className="text-gray-900 dark:text-white font-medium">Wake-up Time</label>
+            </div>
+            <input
+              type="time"
+              value={wakeTime}
+              onChange={(e) => setWakeTime(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
+            />
+            <p className="text-xs text-gray-500 mt-1">All schedule blocks shift based on your wake time.</p>
+          </div>
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <CalendarDays className="w-5 h-5 text-blue-500" />
+              <label className="text-gray-900 dark:text-white font-medium">Journey Start Date (Day 1)</label>
+            </div>
+            <input
+              type="date"
+              value={journeyStartDate}
+              onChange={(e) => setJourneyStartDate(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
+            />
+            <p className="text-xs text-gray-500 mt-1">When empty, Day 1 counts from your first logged day.</p>
+          </div>
+          <button
+            onClick={saveScheduleSettings}
+            disabled={savingSchedule}
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-teal-500 to-blue-600 text-white font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+          >
+            {savingSchedule ? 'Saving...' : 'Save Schedule Settings'}
+          </button>
         </div>
       </div>
 

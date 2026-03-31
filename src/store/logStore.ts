@@ -21,7 +21,7 @@ interface LogState {
   setJournalImprove: (text: string) => void
   saveLog: () => Promise<void>
   getStreaks: () => { current: number; longest: number }
-  getDayNumber: () => number
+  getDayNumber: (journeyStartDate?: string | null) => number
   showToast: (message: string) => void
   clearToast: () => void
 }
@@ -230,7 +230,14 @@ export const useLogStore = create<LogState>((set, get) => ({
     return { current, longest }
   },
 
-  getDayNumber: () => {
+  getDayNumber: (journeyStartDate?: string | null) => {
+    const today = startOfDay(new Date())
+
+    if (journeyStartDate) {
+      const startDate = parseISO(journeyStartDate)
+      return Math.max(1, differenceInCalendarDays(today, startDate) + 1)
+    }
+
     const logs = Object.values(get().logs)
       .filter(l => l.completed_blocks.length > 0)
       .sort((a, b) => a.log_date.localeCompare(b.log_date))
@@ -238,7 +245,6 @@ export const useLogStore = create<LogState>((set, get) => ({
     if (logs.length === 0) return 1
 
     const firstDay = parseISO(logs[0].log_date)
-    const today = startOfDay(new Date())
     return differenceInCalendarDays(today, firstDay) + 1
   },
 

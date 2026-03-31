@@ -3,13 +3,14 @@ import { format, startOfYear, eachDayOfInterval, endOfYear, getDay, parseISO } f
 import { ChevronLeft, ChevronRight, Flame, Target, Calendar, TrendingUp, Trophy } from 'lucide-react'
 import { RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts'
 import { useLogStore } from '../store/logStore'
-import { SCHEDULE } from '../data/schedule'
+import { useSchedule } from '../lib/useSchedule'
 import { PILLAR_LABELS, PILLAR_COLORS } from '../types'
 import type { DailyLog, Pillar } from '../types'
 
 export default function Yearly() {
   const [year, setYear] = useState(new Date().getFullYear())
   const { logs, fetchLogsForYear, getStreaks } = useLogStore()
+  const schedule = useSchedule()
   const [hoveredDay, setHoveredDay] = useState<{ date: string; score: number; x: number; y: number } | null>(null)
 
   useEffect(() => {
@@ -56,7 +57,7 @@ export default function Yearly() {
   const radarData = useMemo(() => {
     const counts: Partial<Record<Pillar, { total: number; completed: number }>> = {}
     for (const { log } of yearLogs) {
-      for (const block of SCHEDULE) {
+      for (const block of schedule) {
         const p = block.category
         if (!counts[p]) counts[p] = { total: 0, completed: 0 }
         counts[p]!.total++

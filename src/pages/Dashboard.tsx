@@ -88,7 +88,7 @@ export default function Dashboard() {
 
       {/* Schedule Blocks by Group */}
       <div className="space-y-6">
-        {(Object.entries(grouped) as [TimeGroup, typeof SCHEDULE][]).map(([group, blocks]) => {
+        {(Object.entries(grouped) as [TimeGroup, ScheduleBlock[]][]).map(([group, blocks]) => {
           if (blocks.length === 0) return null
           return (
             <div key={group}>
